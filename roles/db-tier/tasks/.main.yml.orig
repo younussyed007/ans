@@ -1,0 +1,27 @@
+---
+# tasks file for roles/db-tier
+  - name: enable repos
+    template:
+      src: ./open_three-tier-app.repo
+      dest: /etc/yum.repos.d/open_three-tier-app.repo
+      mode: 0644 
+
+  - name: install postgresql 
+    yum:
+      name:  postgresql-server
+      state: latest
+
+# only run the next 2 tasks once!
+  - name: initilize postgres
+    command: postgresql-setup initdb
+    run_once: true
+
+  - name: start postgres and enable to start at boot
+    service:
+      name: postgresql.service
+      state: started
+      enabled: true
+
+  - name: tell user to finish setting up postgres
+    debug:
+      msg: "Either uncomment the postgres setup or manually login and initialize"

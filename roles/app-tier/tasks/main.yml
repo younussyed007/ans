@@ -1,0 +1,39 @@
+---
+# tasks file for roles/app-tiername: install tomcat and apache
+
+  - name: Install apache and tomcat
+    package:
+      name:  "{{ item }}"
+      state: latest
+    loop:
+      - httpd
+      - tomcat
+      
+  - name: create ansible tomcat directory
+    file:
+      path: /usr/share/tomcat/webapps/ROOT
+      state: directory
+
+  - name: copy static index.html to tomcat webapps/ansible/index.html
+    template:
+      src: index.html.j2
+      dest: /usr/share/tomcat/webapps/ROOT/index.html
+      mode: 0644
+    notify:
+      - restart_tomcat
+
+          
+#  - name: copy static index.html to tomcat webapps/ansible/index.html
+#    copy: 
+#      src: index.html.{{ inventory_hostname }} 
+#      dest: /usr/share/tomcat/webapps/ansible/index.html
+#    notify:
+#      - restart_tomcat
+
+  - name: Enable tomcat and apache
+    service: 
+      name:  "{{ item }}"
+      enabled: yes
+    loop: 
+      - httpd
+      - tomcat 

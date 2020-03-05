@@ -1,0 +1,28 @@
+---
+# This is a playbook for testing 3tier application
+- name: Repo copying 
+  hosts: all
+  gather_facts: false 
+  become: true
+  roles:
+    - repo-copy
+
+- name: Application installation and configuration
+  hosts: apps
+  become: true
+  roles:
+    - app-tier
+
+- name: Frontend Load Balancer application installation and configuration    
+  hosts: frontends
+  gather_facts: false
+  become: true
+  roles:
+    - lb-tier
+
+- name: Database installation and configuration
+  hosts: db
+  gather_facts: false
+  become: true
+  roles:
+    - db-tier

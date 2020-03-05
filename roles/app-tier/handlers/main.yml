@@ -1,0 +1,14 @@
+---
+# handlers file for roles/app-tier---
+# Handlers for roles/app-tier
+- name: restart_tomcat
+  service:
+    name: tomcat
+    state: restarted
+
+- name: restart_httpd
+  service:
+    name: httpd 
+    state: restarted
+
+

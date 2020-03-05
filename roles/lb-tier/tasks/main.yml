@@ -1,0 +1,23 @@
+---
+# tasks for role roles/lb-tier
+#- name: Install http package
+#    package:
+#      name: httpie
+#      state: latest
+
+  - name: install HAProxy
+    yum:
+      name: haproxy 
+      state: latest
+  - name: configure haproxy
+    template:
+      src: ./haproxy.cfg.j2
+      dest: /etc/haproxy/haproxy.cfg
+    notify:
+      - restart_haproxy
+
+  - name: enable HAProxy
+    service:
+      name: haproxy
+      state: started
+      enabled: true

@@ -1,0 +1,30 @@
+---
+# tasks file for roles/db-tier
+
+  - name: install postgresql 
+    yum:
+      name:  postgresql-server
+      state: latest
+
+# only run the next 2 tasks once!
+  - name: Check for the postgresql is installed or not
+    stat:
+      path: /var/lib/pgsql/data
+    register: dir_exist
+  - fail: 
+      msg: "Postgresql is already installed"
+    when: dir_exist.stat.exists == 1
+    
+  - name: initilize postgres
+    command: postgresql-setup initdb
+    run_once: true
+
+  - name: start postgres and enable to start at boot
+    service:
+      name: postgresql.service
+      state: started
+      enabled: true
+
+  - name: tell user to finish setting up postgres
+    debug:
+      msg: "Either uncomment the postgres setup or manually login and initialize"

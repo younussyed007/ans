@@ -1,0 +1,16 @@
+support ansible_host=support1.97ab.internal
+
+
+[all:vars]
+ansible_user = devops
+ansible_ssh_private_key_file = /home/devops/.ssh/id_rsa
+
+[apps]
+app1 ansible_host=app1.97ab.internal
+app2 ansible_host=app2.97ab.internal
+
+[db]
+sqldb  ansible_host=appdb1.97ab.internal
+
+[frontends]
+frontend ansible_host=frontend1.97ab.internal
