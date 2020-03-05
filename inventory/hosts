@@ -1,0 +1,9 @@
+[frontends]
+frontend1.${GUID}.internal ansible_ssh_host=frontend1.${GUID}.example.opentlc.com
+
+[apps]
+app1.${GUID}.internal ansible_ssh_host=app1.${GUID}.example.opentlc.com
+app2.${GUID}.internal ansible_ssh_host=app2.${GUID}.example.opentlc.com
+
+[appdbs]
+appdb1.${GUID}.internal ansible_ssh_host=appdb1.${GUID}.example.opentlc.com
